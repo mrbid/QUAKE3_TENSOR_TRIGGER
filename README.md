@@ -35,7 +35,7 @@ Generally you don't want to multi-thread these solutions much because you don't 
 The SimpleCNN models are still the best as they only use a 3x3 sample window so they are much more accurate, and, they have much less missfire. Crazy huh, so much work to make these 28x28 models which are higher in computational cost, time invested, etc, and yet still less effective.
 
 ## What now?
-Well it depends what your intentions are, if you're just after pwning some noobz, then join this excessiveplus server 173.199.79.107:27974 and go wild, this is only really decent on Instagib game modes. Or join a QuakeLive Instagib server, and while you're at it tell everyone to download ioQuake3 because it's better and more people play it.
+Well it depends what your intentions are, if you're just after pwning some noobz, then join this excessiveplus server [173.199.79.107:27974](http://elitez.eu) and go wild, this is only really decent on Instagib game modes. Or join a QuakeLive Instagib server, and while you're at it tell everyone to download ioQuake3 because it's better and more people play it.
 
 But I prefer you didn't cheat unless it's on that specific server I linked because _everyone_ cheats on it, or QuakeLive because obviously I am not a great fan of QuakeLive.
 
