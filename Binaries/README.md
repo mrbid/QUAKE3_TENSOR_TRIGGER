@@ -1,5 +1,5 @@
 # Linux Binary Releases
-named aptly after godmode. all designed to target aqua bones player model.
+named aptly after godmode. all designed to target aqua bones player model. compressed with [UPX](https://upx.github.io/).
 
 [`god`](https://github.com/mrbid/QUAKE3_TENSOR_TRIGGER/raw/main/Binaries/god) - _(SimpleCNN)_ The original designed for [ioQuake3](https://ioquake3.org/).<br>
 [`god2`](https://github.com/mrbid/QUAKE3_TENSOR_TRIGGER/raw/main/Binaries/god2) - _(SimpleCNN)_ QuakeLive & ioQuake3.<br>
