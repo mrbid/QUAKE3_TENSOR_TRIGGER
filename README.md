@@ -19,8 +19,8 @@ Here we are now, this repository is the fruits of my labour upto this point.
 `sudo apt install clang gcc libxdo-dev libxdo3 libespeak1 libespeak-dev espeak xterm`
 
 ## How To
-- With the SimpleCNN models you can just go and [grab the bin directly here](https://github.com/mrbid/QUAKE3_TENSOR_TRIGGER/tree/main/Binaries) or jsut compile from source by invoking the `compile.sh` file in the local directory.
-- With the Keras models you will first want to invoke the `train.py` file in the respective Trainer directory. This will train the model, also compile the C client which interfaces between the Python daemon. Then you can go into the PredictBot directory and run `exec.sh` which will launch two console windows, the C program in Xterm and the Python daemon in the original console window exected by the exec script.
+- With the SimpleCNN models you can just go and [grab the bin directly here](https://github.com/mrbid/QUAKE3_TENSOR_TRIGGER/tree/main/Binaries) or just compile from source by invoking the `compile.sh` file in the local directory.
+- With the Keras models you will first want to invoke the `train.py` file in the respective `/Trainer` directory. This will train the model, also compile the C client which interfaces with the Python daemon. Then you can go into the `/PredictBot` directory and run `exec.sh` which will launch two console windows, the C program in Xterm and the Python daemon in the original console window exected by the exec script.
 - You're going to need to setup Tensorflow and Python3, a guide on how to do this is included in [this article](https://james-william-fletcher.medium.com/creating-a-machine-learning-auto-shoot-bot-for-cs-go-part-6-af9589941ef3).
 - You should be good to go.
 
