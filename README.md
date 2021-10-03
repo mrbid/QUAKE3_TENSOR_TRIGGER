@@ -13,7 +13,7 @@ I then got bored of CG:GO, and focused my efforts back on Quake3 a game that I p
 
 I set my sights back on the aqua blue bones model which actually turned out to be a lot harder to target than a player head in CS:GO.
 
-Here we are now, this repsoitory is the fruits of my labour upto this point.
+Here we are now, this repository is the fruits of my labour upto this point.
 
 ## Prerequisites
 `sudo apt install clang gcc libxdo-dev libxdo3 libespeak1 libespeak-dev espeak xterm`
