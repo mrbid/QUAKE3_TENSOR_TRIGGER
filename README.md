@@ -39,8 +39,12 @@ Well it depends what your intentions are, if you're just after pwning some noobz
 
 But I prefer you didn't cheat unless it's on that specific server I linked because _everyone_ cheats on it, or QuakeLive because obviously I am not a great fan of QuakeLive.
 
-What I would prefer is if you could contribute to the projects dataset, by submitting a zipped folder of all your captured samples some how via an issue on this repo. But please, try to sort them first, just because the bot says all the samples in the targets directory are targets is not always the case, the general rule of thumb is:
+What I would prefer is if you could contribute to the projects dataset, by submitting a zipped folder of all your captured samples somehow via an issue on this repo. But please, try to sort the samples first, just because the bot says all the samples in the targets directory are targets is not always the case, the general rule of thumb is:
 - If the target is not dead center of the 28x28 window, it's a "nontarget" and if it is dead center, then it's a "target".
+
+## Conclusion
+
+Just trying to make the best computer vision model & dataset for Quake3.
 
 
 
