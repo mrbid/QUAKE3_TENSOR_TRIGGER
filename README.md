@@ -32,7 +32,15 @@ When it comes to a CNN or an FNN it's this simple.
 A CNN will train and execute faster on a GPU as where a FNN will train and execute faster on a CPU because an FNN is just a [FMA operation](https://en.wikipedia.org/wiki/Multiply%E2%80%93accumulate_operation) which CPU's have [AVX](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions) for.
 Generally you don't want to multi-thread these solutions much because you don't want to eat into the games processing resources too much, but if you do have some excess CPU cores to spare the qay I recommend scaling up the FNN solution is to train one model per Quake3 player model, then execute each trained model at the same time across multiple CPU cores. This way your VRAM to RAM operation which is generally limited to ~60 FPS can grab a frame and the CPU can process multiple trained networks on the frame at the same time _(one per Quake3 player model)_ and return a attack or not to attack signal faster than bobs your uncle.
 
+The SimpleCNN models are still the best as they only use a 3x3 sample window so they are much more accurate, and, they have much less missfire. Crazy huh, so much work to make these 28x28 models which are higher in computational cost, time invested, etc, and yet still less effective.
 
+## What now?
+Well it depends what your intentions are, if you're just after pwning some noobz, then join this excessiveplus server 173.199.79.107:27974 and go wild, this is only really decent on Instagib game modes. Or join a QuakeLive Instagib server, and while you're at it tell everyone to download ioQuake3 because it's better and more people play it.
+
+But I prefer you didn't cheat unless it's on that specific server I linked because _everyone_ cheats on it, or QuakeLive because obviously I am not a great fan of QuakeLive.
+
+What I would prefer is if you could contribute to the projects dataset, by submitting a zipped folder of all your captured samples some how via an issue on this repo. But please, try to sort them first, just because the bot says all the samples in the targets directory are targets is not always the case, the general rule of thumb is:
+- If the target is not dead center of the 28x28 window, it's a "nontarget" and if it is dead center, then it's a "target".
 
 
 
