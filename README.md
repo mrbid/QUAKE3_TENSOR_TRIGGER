@@ -1,7 +1,7 @@
 # QUAKE3_TENSOR_TRIGGER
 A series of machine learning trigger bots for Quake3 Arena &amp; Quake Live.
 
-Where do I start... Well... This all started around Feburary of 2020 with https://github.com/quake3aimbot it was my first attempt at working with perceptrons and it lead to me creating [this article](https://medium.com/swlh/training-a-neural-network-to-autoshoot-in-fps-games-e105f27ec1a0) which describes the process of how I made it.
+Where do I start... Well... This all started around Feburary of 2020 with https://github.com/quake3aimbot it was my first attempt at working with perceptrons and it lead to me creating [this article](https://medium.com/swlh/training-a-neural-network-to-autoshoot-in-fps-games-e105f27ec1a0) which describes the process of how I made my first simple CNN like neural network for automatic tigger in Quake3.
 
 After that I got a little deeper into [Feedforward Neural Networks](https://en.wikipedia.org/wiki/Feedforward_neural_network) and started the [TFCNN project](https://github.com/TFCNN) which is somewhat ongoing.
 
