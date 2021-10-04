@@ -292,11 +292,6 @@ void processScanArea(Window w)
             c.pixel = XGetPixel(img, x, y);
             XQueryColor(d, map, &c);
 
-            // 0-1 norm
-            // if(c.red == 0 || c.green == 0 || c.blue == 0)
-            //     printf("ZERO DETECTED\n");
-            //printf("%d %d %d\n", c.red, c.green, c.blue);
-
             input[i]   = c.red   / 65535;
             input[i+1] = c.green / 65535;
             input[i+2] = c.blue  / 65535;
