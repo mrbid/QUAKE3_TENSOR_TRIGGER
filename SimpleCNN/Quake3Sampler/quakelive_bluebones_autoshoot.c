@@ -2,6 +2,8 @@
 --------------------------------------------------
     James William Fletcher (james@voxdsp.com)
 --------------------------------------------------
+    
+    This version has a dataset logging system built into it.
 
     This is a re-release with a crosshair and other
     minimal changes.
