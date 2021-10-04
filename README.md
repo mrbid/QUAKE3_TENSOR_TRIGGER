@@ -37,7 +37,7 @@ The SimpleCNN models are still the best as they only use a 3x3 sample window so 
 The next best model, or what I consider the forefront of the evolution at the moment is the 28x28 `QUAKE3_CNN` project. The 3x3 bot _(SimpleCNN)_ is a done deal, but the CNN has much room for improvement. The FNN on the other hand is like a nice side-toy, a biproduct of the CNN.
 
 ## Oddities
-`QUAKE3_CNN` only has one C client as where `QUAKE3_FNN` has two, one in the root directory which compiles a standalone version in C which uses AVX FMA extensions and one in the `/PredictBot` directory which interfaces with the Python daemon.
+`QUAKE3_CNN` only has one C client as where `QUAKE3_FNN` has two, one in the root directory which compiles a standalone version in C which uses AVX FMA extensions and the one in the `/PredictBot` directory which interfaces with the Python daemon.
 
 ## What now?
 Well it depends what your intentions are, if you're just after pwning some noobz, then join this excessiveplus server [173.199.79.107:27974](http://elitez.eu) and go wild, this bot is only really decent on Instagib game modes. Also consider joining a QuakeLive Instagib server, and while you're at it tell everyone to download ioQuake3 because it's better and more people play it.
