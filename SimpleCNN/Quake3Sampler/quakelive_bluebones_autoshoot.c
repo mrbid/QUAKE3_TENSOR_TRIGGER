@@ -330,9 +330,9 @@ void saveSample(Window w, const char* name)
     const Colormap map = XDefaultColormap(d, si);
 
     // extract colour information
-    double r[slc] = {0};
-    double g[slc] = {0};
-    double b[slc] = {0};
+    float r[slc] = {0};
+    float g[slc] = {0};
+    float b[slc] = {0};
     int i = 0;
     for(int y = 0; y < sh; y++)
     {
@@ -342,9 +342,9 @@ void saveSample(Window w, const char* name)
             c.pixel = XGetPixel(img, x, y);
             XQueryColor(d, map, &c);
 
-            r[i] = (double)c.red;
-            g[i] = (double)c.green;
-            b[i] = (double)c.blue;
+            r[i] = (float)c.red;
+            g[i] = (float)c.green;
+            b[i] = (float)c.blue;
 
             i++;
         }
