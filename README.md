@@ -34,7 +34,7 @@ Generally you don't want to multi-thread these solutions much because you don't 
 
 The SimpleCNN models are still the best as they only use a 3x3 sample window so they are much more accurate, and, they have much less missfire. Crazy huh, so much work to make these 28x28 models which are higher in computational cost, time invested, etc, and yet still less effective.
 
-The next best model, or what I consider the forefront of the evolution at the moment is the `QUAKE3_CNN` project. The 3x3 bot is a done deal, but the CNN has much room for improvement. The FNN on the other hand is like a nice side-toy, a biproduct of the CNN.
+The next best model, or what I consider the forefront of the evolution at the moment is the 28x28 `QUAKE3_CNN` project. The 3x3 bot _(SimpleCNN)_ is a done deal, but the CNN has much room for improvement. The FNN on the other hand is like a nice side-toy, a biproduct of the CNN.
 
 ## Oddities
 `QUAKE3_CNN` only has one C client as where `QUAKE3_FNN` has two, one in the root directory which compiles a standalone version in C which uses AVX FMA extensions and one in the `/PredictBot` directory which interfaces with the Python daemon.
