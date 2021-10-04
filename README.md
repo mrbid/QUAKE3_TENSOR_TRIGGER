@@ -40,7 +40,7 @@ The next best model, or what I consider the forefront of the evolution at the mo
 `QUAKE3_CNN` only has one C client as where `QUAKE3_FNN` has two, one in the root directory which compiles a standalone version in C which uses AVX FMA extensions and one in the `/PredictBot` directory which interfaces with the Python daemon.
 
 ## What now?
-Well it depends what your intentions are, if you're just after pwning some noobz, then join this excessiveplus server [173.199.79.107:27974](http://elitez.eu) and go wild, this is only really decent on Instagib game modes. Or join a QuakeLive Instagib server, and while you're at it tell everyone to download ioQuake3 because it's better and more people play it.
+Well it depends what your intentions are, if you're just after pwning some noobz, then join this excessiveplus server [173.199.79.107:27974](http://elitez.eu) and go wild, this bot is only really decent on Instagib game modes. Also consider joining a QuakeLive Instagib server, and while you're at it tell everyone to download ioQuake3 because it's better and more people play it.
 
 But I prefer you didn't cheat unless it's on that specific server I linked because _everyone_ cheats on it, or QuakeLive because obviously I am not a great fan of QuakeLive.
 
