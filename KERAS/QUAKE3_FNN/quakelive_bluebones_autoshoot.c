@@ -3,17 +3,6 @@
     James William Fletcher (james@voxdsp.com)
 --------------------------------------------------
 
-    This is a re-release with a crosshair and other
-    minimal changes.
-    
-    This uses pre-computed weights designed to target
-    only the aqua blue bones model.
-
-    So enable force models to aqua blue bones!
-    
-    Network described here:
-    https://medium.com/swlh/training-a-neural-network-to-autoshoot-in-fps-games-e105f27ec1a0
-
     QuakeLive Settings:
     /r_picmip 16
     /cg_shadows 0
@@ -23,14 +12,10 @@
     /cg_railTrailTime 0
     
     Prereq:
-    sudo apt install xdo wmctrl espeak xdotool libxdo-dev libxdo3
     sudo apt install libxdo-dev libxdo3 libespeak1 libespeak-dev espeak
 
     Compile:
     clang quakelive_bluebones_autoshoot.c -Ofast -mavx -mfma -lX11 -lxdo -lespeak -lm -o aim
-
-    Launch:
-    while true; do ./aim; done
 */
 
 #include <stdio.h>
