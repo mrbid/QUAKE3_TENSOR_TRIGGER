@@ -78,12 +78,6 @@ static inline float sigmoid(const float x)
     return 1.f / (1.f + exp(-x));
 }
 
-static inline float relu(const float x)
-{
-    if(x < 0.f){return 0.f;}
-    return x;
-}
-
 float processModel(const float* input)
 {
     float o1 = 0.f;
