@@ -64,9 +64,6 @@ Window twin;
 unsigned int x=0, y=0;
 unsigned int tc = 0;
 
-char targets_dir[256];
-char nontargets_dir[256];
-
 
 /***************************************************
    ~~ Neural Network Forward-Pass
