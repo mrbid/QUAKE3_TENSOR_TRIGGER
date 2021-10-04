@@ -3,6 +3,8 @@
     James William Fletcher (james@voxdsp.com)
 --------------------------------------------------
 
+    This interfaces with the Python daemon.
+
     QuakeLive Settings:
     /r_picmip 16
     /cg_shadows 0
