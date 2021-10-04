@@ -2,6 +2,8 @@
 --------------------------------------------------
     James William Fletcher (james@voxdsp.com)
 --------------------------------------------------
+       
+    This compiles the currently generated keras weights into a standalone binary.
 
     QuakeLive Settings:
     /r_picmip 16
