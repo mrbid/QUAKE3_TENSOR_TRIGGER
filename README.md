@@ -47,7 +47,7 @@ But I prefer you didn't cheat unless it's on that specific server I linked becau
 What I would prefer is if you could contribute to the projects dataset, by submitting a zipped folder of all your captured samples somehow via an issue on this repo. But please, try to sort the samples first, just because the bot says all the samples in the targets directory are targets is not always the case, the general rule of thumb is:
 - If the target is not dead center of the 28x28 window, it's a "nontarget" and if it is dead center, then it's a "target".
 
-For the record, I don't cheat. Unless you find me in that one Elitez server, then yes, I am cheating, using [`god2`](https://github.com/mrbid/QUAKE3_TENSOR_TRIGGER/raw/main/Binaries/god2) why? Because that's what I like to do.
+For the record, I don't cheat. Unless you find me in that one Elitez server, then yes, I am cheating, using [`god2`](https://github.com/mrbid/QUAKE3_TENSOR_TRIGGER/raw/main/Binaries/god2) why? Because that is what I like to do.
 
 ## Conclusion
 
