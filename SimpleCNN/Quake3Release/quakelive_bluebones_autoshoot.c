@@ -22,6 +22,7 @@
     /cg_drawfps 1
     /cg_fov 130
     /cg_railTrailTime 0
+    /cg_drawCrosshair 0
     
     Prereq:
     sudo apt install clang libxdo-dev libxdo3 libespeak1 libespeak-dev espeak
