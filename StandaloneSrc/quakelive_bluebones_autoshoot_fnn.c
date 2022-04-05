@@ -74,7 +74,7 @@ const float fnn_weights[] = {0.34776774,-0.020334812,0.32844415,-0.19543177,-0.4
 
 static inline float sigmoid(const float x)
 {
-    return 1.f / (1.f + exp(-x));
+    return 1.f / (1.f + expf(-x));
 }
 
 float processModel(const float* input)
@@ -83,7 +83,7 @@ float processModel(const float* input)
     for(int i = 0; i < slall; i++)
         o1 += input[i] * fnn_weights[i]; // weight
     o1 += fnn_weights[slall]; // bias
-    return sigmoid((tanh(o1) * 3.673439026f) + 0.1260426193f);
+    return sigmoid((tanhf(o1) * 3.673439026f) + 0.1260426193f);
 }
 
 /***************************************************
