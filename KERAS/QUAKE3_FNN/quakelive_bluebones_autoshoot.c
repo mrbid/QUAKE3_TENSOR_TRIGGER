@@ -80,7 +80,7 @@ char nontargets_dir[256];
 */
 static inline float sigmoid(const float x)
 {
-    return 1.f / (1.f + exp(-x));
+    return 1.f / (1.f + expf(-x));
 }
 
 static inline float relu(const float x)
@@ -97,7 +97,7 @@ float processModel(const float* input)
         o1 += input[i] * aim_model_layer0[i]; // weight
 
     o1 += aim_model_layer0[slall]; // bias
-    o1 = tanh(o1);
+    o1 = tanhf(o1);
 
     return sigmoid((o1 * aim_model_layer1[0]) + aim_model_layer1[1]);
 }
@@ -113,7 +113,7 @@ float processModel(const float* input)
 //         if(i == slall)
 //         {
 //             o1[u] += aim_model_layer0[i]; // bias
-//             o1[u] = tanh(o1[u]);
+//             o1[u] = tanhf(o1[u]);
 //             i = 0;
 //             u++;
 //         }
