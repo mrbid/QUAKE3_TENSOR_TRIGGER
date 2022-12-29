@@ -1,7 +1,9 @@
 # QUAKE3_TENSOR_TRIGGER
 A machine learning trigger bot for Quake3 Arena &amp; Quake Live.
 
-It's really good, I don't know what else to tell you. I've ruined my favorite game, please don't download this?
+It's really good, I don't know what else to tell you.
+
+I've ruined my favorite game, please don't download this?
 
 ### prerequisites 
 ```
