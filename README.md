@@ -5,6 +5,8 @@ It's really good, I don't know what else to tell you.
 
 I've ruined my favorite game, please don't download this?
 
+All you have to do is force player models to the blue bones model as that is the only character model I trained this dataset on.
+
 ### prerequisites 
 ```
 sudo apt install clang xterm python3 python3-pip libx11-dev libxdo-dev libxdo3 libespeak1 libespeak-dev espeak
