@@ -1,0 +1,2 @@
+cd PredictBot/
+./exec.sh
