@@ -18,3 +18,5 @@ sudo python3 -m pip install onnxruntime
 ```
 ./RUN.sh
 ```
+
+This is cool but [this one is simpler and better](https://gist.github.com/mrbid/37996a90792f26bd02787fd4ab8b1bad).
