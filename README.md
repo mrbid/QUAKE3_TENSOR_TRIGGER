@@ -9,14 +9,15 @@ sudo apt install clang xterm python3 python3-pip libx11-dev libxdo-dev libxdo3 l
 sudo python3 -m pip install --upgrade pip
 sudo python3 -m pip install numpy
 sudo python3 -m pip install tensorflow-cpu
-sudo python3 -m pip install --upgrade tensorflow-cpu
 sudo python3 -m pip install tf2onnx
 sudo python3 -m pip install onnxruntime
 ```
 
 ### exec
 ```
-./RUN.sh
+./RUN_CNN.sh
+or
+./RUN_FNN.sh
 ```
 
 This is cool but [this one is simpler and better](https://gist.github.com/mrbid/37996a90792f26bd02787fd4ab8b1bad).
