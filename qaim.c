@@ -390,6 +390,10 @@ int main()
 {
     srand(time(0));
 
+    // wipe old data
+    remove("/dev/shm/pred_r.dat");
+    remove("/dev/shm/pred_input.dat");
+
     if(espeak_Initialize(AUDIO_OUTPUT_SYNCH_PLAYBACK, 0, 0, 0) < 0)
         espeak_fail = 1;
 
