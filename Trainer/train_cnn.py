@@ -17,7 +17,7 @@ from os import mkdir
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # train only on CPU?
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 # print everything / no truncations
 np.set_printoptions(threshold=sys.maxsize)
@@ -57,12 +57,12 @@ if isdir(project):
     nontargets_x = []
     nontargets_y = []
     if isfile(project + "/nontargets_x.npy"):
-        print("Loading nontargets_x dataset..")
+        print("Loading nontargets_x dataset.. (" + str(ntc) + ")")
         st = time_ns()
         nontargets_x = np.load(project + "/nontargets_x.npy")
         print("Done in {:.2f}".format((time_ns()-st)/1e+9) + " seconds.")
     else:
-        print("Creating nontargets_x dataset..")
+        print("Creating nontargets_x dataset.. (" + str(ntc) + ")")
         st = time_ns()
         files = glob.glob("nontarget/*")
         for f in files:
@@ -91,12 +91,12 @@ if isdir(project):
     targets_x = []
     targets_y = []
     if isfile(project + "/targets_x.npy"):
-        print("Loading nontargets_x dataset..")
+        print("Loading nontargets_x dataset.. (" + str(tc) + ")")
         st = time_ns()
         targets_x = np.load(project + "/targets_x.npy")
         print("Done in {:.2f}".format((time_ns()-st)/1e+9) + " seconds.")
     else:
-        print("Creating targets_x dataset..")
+        print("Creating targets_x dataset.. (" + str(tc) + ")")
         st = time_ns()
         files = glob.glob("target/*")
         for f in files:
@@ -193,8 +193,8 @@ if isdir(project):
             if f:
                 f.write(str(layer.get_weights()))
             f.close()
-            np.savetxt(project + "/" + layer.name + ".csv", layer.get_weights()[0].flatten(), delimiter=",") # weights
-            np.savetxt(project + "/" + layer.name + "_bias.csv", layer.get_weights()[1].flatten(), delimiter=",") # biases
+            np.savetxt(project + "/" + layer.name + ".csv", layer.get_weights()[0].transpose().flatten(), delimiter=",") # weights
+            np.savetxt(project + "/" + layer.name + "_bias.csv", layer.get_weights()[1].transpose().flatten(), delimiter=",") # biases
 
     # save CNN weights as C header
     f = open(project + "/" + project + "_layers.h", "w")
@@ -205,7 +205,7 @@ if isdir(project):
             weights = layer.get_weights()
             if weights != []:
                 f.write("const float " + layer.name + "[] = {")
-                for w in weights[0].flatten():
+                for w in weights[0].transpose().flatten():
                     if isfirst == 0:
                         f.write(str(w))
                         isfirst = 1
@@ -214,7 +214,7 @@ if isdir(project):
                 f.write("};\n\n")
                 isfirst = 0
                 f.write("const float " + layer.name + "_bias[] = {")
-                for w in weights[1].flatten():
+                for w in weights[1].transpose().flatten():
                     if isfirst == 0:
                         f.write(str(w))
                         isfirst = 1

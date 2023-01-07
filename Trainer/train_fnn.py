@@ -61,12 +61,12 @@ if isdir(project):
     nontargets_x = []
     nontargets_y = []
     if isfile(project + "/nontargets_x.npy"):
-        print("Loading nontargets_x dataset..")
+        print("Loading nontargets_x dataset.. (" + str(ntc) + ")")
         st = time_ns()
         nontargets_x = np.load(project + "/nontargets_x.npy")
         print("Done in {:.2f}".format((time_ns()-st)/1e+9) + " seconds.")
     else:
-        print("Creating nontargets_x dataset..")
+        print("Creating nontargets_x dataset.. (" + str(ntc) + ")")
         st = time_ns()
         files = glob.glob("nontarget/*")
         for f in files:
@@ -95,12 +95,12 @@ if isdir(project):
     targets_x = []
     targets_y = []
     if isfile(project + "/targets_x.npy"):
-        print("Loading nontargets_x dataset..")
+        print("Loading nontargets_x dataset.. (" + str(tc) + ")")
         st = time_ns()
         targets_x = np.load(project + "/targets_x.npy")
         print("Done in {:.2f}".format((time_ns()-st)/1e+9) + " seconds.")
     else:
-        print("Creating targets_x dataset..")
+        print("Creating targets_x dataset.. (" + str(tc) + ")")
         st = time_ns()
         files = glob.glob("target/*")
         for f in files:
@@ -188,8 +188,8 @@ if isdir(project):
     # save flat weights
     for layer in model.layers:
         if layer.get_weights() != []:
-            np.savetxt(project + "/" + layer.name + ".csv", layer.get_weights()[0].flatten(), delimiter=",") # weights
-            np.savetxt(project + "/" + layer.name + "_bias.csv", layer.get_weights()[1].flatten(), delimiter=",") # bias
+            np.savetxt(project + "/" + layer.name + ".csv", layer.get_weights()[0].transpose().flatten(), delimiter=",") # weights
+            np.savetxt(project + "/" + layer.name + "_bias.csv", layer.get_weights()[1].transpose().flatten(), delimiter=",") # bias
 
     # save weights for C array
     print("")
@@ -199,10 +199,10 @@ if isdir(project):
     f.write("#ifndef " + project + "_layers\n#define " + project + "_layers\n\n")
     if f:
         for layer in model.layers:
-            total_layer_weights = layer.get_weights()[0].flatten().shape[0]
+            total_layer_weights = layer.get_weights()[0].transpose().flatten().shape[0]
             total_layer_units = layer.units
             layer_weights_per_unit = total_layer_weights / total_layer_units
-            #print(layer.get_weights()[0].flatten().shape)
+            #print(layer.get_weights()[0].transpose().flatten().shape)
             #print(layer.units)
             print("+ Layer:", li)
             print("Total layer weights:", total_layer_weights)
@@ -214,7 +214,7 @@ if isdir(project):
             wc = 0
             bc = 0
             if layer.get_weights() != []:
-                for weight in layer.get_weights()[0].flatten():
+                for weight in layer.get_weights()[0].transpose().flatten():
                     wc += 1
                     if isfirst == 0:
                         f.write(str(weight))
@@ -222,8 +222,8 @@ if isdir(project):
                     else:
                         f.write("," + str(weight))
                     if wc == layer_weights_per_unit:
-                        f.write(", /* bias */ " + str(layer.get_weights()[1].flatten()[bc]))
-                        #print("bias", str(layer.get_weights()[1].flatten()[bc]))
+                        f.write(", /* bias */ " + str(layer.get_weights()[1].transpose().flatten()[bc]))
+                        #print("bias", str(layer.get_weights()[1].transpose().flatten()[bc]))
                         wc = 0
                         bc += 1
             f.write("};\n\n")
