@@ -17,7 +17,7 @@ from os import mkdir
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # train only on CPU?
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+#os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 # print everything / no truncations
 np.set_printoptions(threshold=sys.maxsize)
@@ -30,6 +30,7 @@ activator = 'tanh'
 # layers = 3
 layer_units = 1
 batches = 24
+use_bias = False
 
 tc =  len(glob.glob('target/*.ppm'))    # target sample count/length
 ntc = len(glob.glob('nontarget/*.ppm')) # non-target sample count/length
@@ -149,10 +150,10 @@ shuffle_in_unison(train_x, train_y)
 
 # construct neural network
 model = Sequential()
-model.add(Dense(layer_units, activation=activator, input_dim=inputsize))
+model.add(Dense(layer_units, activation=activator, use_bias=use_bias, input_dim=inputsize))
 # for x in range(layers-2):
-#     model.add(Dense(layer_units, activation=activator))
-model.add(Dense(1, activation='sigmoid'))
+#     model.add(Dense(layer_units, activation=activator, use_bias=use_bias))
+model.add(Dense(1, activation='sigmoid', use_bias=use_bias))
 
 # optim = keras.optimizers.Adam(lr=0.0001)
 model.compile(optimizer='adam', loss='mean_squared_error')
@@ -189,7 +190,8 @@ if isdir(project):
     for layer in model.layers:
         if layer.get_weights() != []:
             np.savetxt(project + "/" + layer.name + ".csv", layer.get_weights()[0].transpose().flatten(), delimiter=",") # weights
-            np.savetxt(project + "/" + layer.name + "_bias.csv", layer.get_weights()[1].transpose().flatten(), delimiter=",") # bias
+            if use_bias == True:
+                np.savetxt(project + "/" + layer.name + "_bias.csv", layer.get_weights()[1].transpose().flatten(), delimiter=",") # bias
 
     # save weights for C array
     print("")
@@ -222,8 +224,9 @@ if isdir(project):
                     else:
                         f.write("," + str(weight))
                     if wc == layer_weights_per_unit:
-                        f.write(", /* bias */ " + str(layer.get_weights()[1].transpose().flatten()[bc]))
-                        #print("bias", str(layer.get_weights()[1].transpose().flatten()[bc]))
+                        if use_bias == True:
+                            f.write(", /* bias */ " + str(layer.get_weights()[1].transpose().flatten()[bc]))
+                            #print("bias", str(layer.get_weights()[1].transpose().flatten()[bc]))
                         wc = 0
                         bc += 1
             f.write("};\n\n")
