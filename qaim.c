@@ -49,7 +49,7 @@
 #pragma GCC diagnostic ignored "-Wunused-result"
 
 #define SCAN_DELAY 1000
-#define ACTIVATION_SENITIVITY 1.0f
+#define ACTIVATION_SENITIVITY 0.97f
 #define REPEAT_ACTIVATION 0
 
 #define uint unsigned int
@@ -430,7 +430,7 @@ int main()
     si = XDefaultScreen(d);
 
     //xdo
-    xdo = xdo_new(":0.0");
+    xdo = xdo_new(":0");
 
     // set console title
     // system("xdotool getactivewindow set_window --name \"QuakeLive Autoshoot\"");
@@ -570,7 +570,7 @@ int main()
                     const float ret = processModel(&input[0]);
                     if(ret > 0.f)
                     {
-                        if(ret > ACTIVATION_SENITIVITY)
+                        if(ret >= ACTIVATION_SENITIVITY)
                         {
                             printf("\e[93mA: %f\e[0m\n", ret);
                             XSetForeground(d, gc, 65280);
