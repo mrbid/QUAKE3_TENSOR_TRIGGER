@@ -56,7 +56,6 @@ team_model "bones/default"<br>
 team_headmodel "bones/default"<br>
 color1 "6"<br>
 color2 "5"<br>
-cg_predictItems "1"<br>
 r_picmip "16"<br>
 r_overBrightBits "1"<br>
 r_simpleMipMaps "1"<br>
