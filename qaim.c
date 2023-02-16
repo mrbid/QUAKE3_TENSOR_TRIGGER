@@ -309,9 +309,9 @@ void processScanArea(Window w)
             const unsigned char cb = pixel & img->blue_mask;
 
             // 0-1 norm
-            input[i]   = (float)cb * 0.003921568859f;
+            input[i]   = (float)cr * 0.003921568859f;
             input[++i] = (float)cg * 0.003921568859f;
-            input[++i] = (float)cr * 0.003921568859f;
+            input[++i] = (float)cb * 0.003921568859f;
             i++;
         }
     }
