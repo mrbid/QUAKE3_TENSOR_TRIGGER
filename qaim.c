@@ -6,14 +6,6 @@
         ~~~~~~~~~~~~~
 
     Force models to aqua blue bones!
-
-    QuakeLive Settings:
-    /r_picmip 16
-    /cg_shadows 0
-    /com_maxfps 333
-    /cg_drawfps 1
-    /cg_fov 130
-    /cg_railTrailTime 0
     
     Prereq:
     sudo apt install xdo wmctrl espeak xdotool libxdo-dev libxdo3
