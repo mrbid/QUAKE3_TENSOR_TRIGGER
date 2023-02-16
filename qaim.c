@@ -63,7 +63,6 @@ const uint sh2 = sh/2;
 const uint slc = sw*sh;
 const uint slall = slc*3;
 
-float input[slall] = {0};
 uint sps = 0; // for SPS
 
 Display *d;
@@ -72,6 +71,7 @@ Window twin;
 unsigned int x=0, y=0;
 unsigned int tc = 0;
 
+unsigned char rgbbytes[slall] = {0};
 char targets_dir[256];
 
 
@@ -79,6 +79,7 @@ char targets_dir[256];
    ~~ Neural Network Forward-Pass
 */
 void processScanArea(Window w);
+void writePPM(const char* file, const unsigned char* data);
 
 uint64_t microtime()
 {
@@ -89,7 +90,7 @@ uint64_t microtime()
     return 1000000 * tv.tv_sec + tv.tv_usec;
 }
 
-float processModel(const float* input)
+float processModel()
 {
     // prevent old outputs returning
     static uint64_t stale = 0;
@@ -117,17 +118,7 @@ float processModel(const float* input)
         processScanArea(twin);
         
         // write sceen buffer / nn input to file
-        f = fopen("/dev/shm/pred_input.dat", "wb");
-        if(f != NULL)
-        {
-            const size_t wbs = slall * sizeof(float);
-            if(fwrite(input, 1, wbs, f) != wbs)
-            {
-                fclose(f);
-                return ret;
-            }
-            fclose(f);
-        }
+        writePPM("/dev/shm/pred_input.dat", &rgbbytes[0]);
     }
     else
     {
@@ -137,17 +128,7 @@ float processModel(const float* input)
             processScanArea(twin);
             
             // write sceen buffer / nn input to file
-            f = fopen("/dev/shm/pred_input.dat", "wb");
-            if(f != NULL)
-            {
-                const size_t wbs = slall * sizeof(float);
-                if(fwrite(input, 1, wbs, f) != wbs)
-                {
-                    fclose(f);
-                    return 0.f;
-                }
-                fclose(f);
-            }
+            writePPM("/dev/shm/pred_input.dat", &rgbbytes[0]);
         }
     }
 
@@ -263,29 +244,6 @@ Window getNextChild(Display* d, Window current)
 
 void saveSample(Window w, const char* name)
 {
-    // get image block
-    XImage *img = XGetImage(d, w, x-sw2, y-sh2, sw, sh, AllPlanes, XYPixmap);
-    if(img == NULL)
-        return;
-
-    // extract colour information
-    unsigned char rgbbytes[slall] = {0};
-    int i = 0;
-    for(int y = 0; y < sh; y++)
-    {
-        for(int x = 0; x < sw; x++)
-        {
-            const unsigned long pixel = XGetPixel(img, x, y);
-            rgbbytes[i] = (pixel & img->red_mask) >> 16;
-            rgbbytes[++i] = (pixel & img->green_mask) >> 8;
-            rgbbytes[++i] = pixel & img->blue_mask;
-            i++;
-        }
-    }
-
-    // free image block
-    XFree(img);
-
     // save to file
     writePPM(name, &rgbbytes[0]);
 }
@@ -304,14 +262,14 @@ void processScanArea(Window w)
         for(int x = 0; x < sw; x++)
         {
             const unsigned long pixel = XGetPixel(img, x, y);
-            const unsigned char cr = (pixel & img->red_mask) >> 16;
-            const unsigned char cg = (pixel & img->green_mask) >> 8;
-            const unsigned char cb = pixel & img->blue_mask;
+            const unsigned char sr = (pixel & img->red_mask) >> 16;
+            const unsigned char sg = (pixel & img->green_mask) >> 8;
+            const unsigned char sb = pixel & img->blue_mask;
 
             // 0-1 norm
-            input[i]   = (float)cr * 0.003921568859f;
-            input[++i] = (float)cg * 0.003921568859f;
-            input[++i] = (float)cb * 0.003921568859f;
+            rgbbytes[i]   = (unsigned char)sr;
+            rgbbytes[++i] = (unsigned char)sg;
+            rgbbytes[++i] = (unsigned char)sb;
             i++;
         }
     }
@@ -567,7 +525,7 @@ int main()
 
                 if(key_is_pressed(XK_G)) // print activation when pressed
                 {
-                    const float ret = processModel(&input[0]);
+                    const float ret = processModel();
                     if(ret > 0.f)
                     {
                         if(ret >= ACTIVATION_SENITIVITY)
@@ -593,7 +551,7 @@ int main()
                 }
             }
 
-            const float activation = processModel(&input[0]);
+            const float activation = processModel();
             if(activation >= ACTIVATION_SENITIVITY)
             {
                 tc++;
