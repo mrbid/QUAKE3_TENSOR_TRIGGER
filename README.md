@@ -61,4 +61,5 @@ r_overBrightBits "1"<br>
 r_simpleMipMaps "1"<br>
 r_vertexLight "0"<br>
 cg_shadows "0"<br>
+    <a href="https://www.quakearea.com/blog/q3-smoothness-guide.html">Smoothness Guide</a>
 </details>
