@@ -355,7 +355,7 @@ void rainbow_printf(const char* text)
     
     base_clr += 3;
 
-    unsigned int clr = base_clr;
+    unsigned char clr = base_clr;
     const unsigned int len = strlen(text);
     for(unsigned int i = 0; i < len; i++)
     {
@@ -398,7 +398,7 @@ int main()
         espeak_fail = 1;
 
     system("clear");
-    rainbow_printf("James William Fletcher (james@voxdsp.com)\n\n");
+    rainbow_printf("James William Fletcher (github.com/mrbid)\n\n");
     rainbow_printf("L-CTRL + L-ALT = Toggle BOT ON/OFF\n");
     rainbow_printf("R-CTRL + R-ALT = Toggle HOTKEYS ON/OFF\n");
     rainbow_printf("P = Toggle crosshair\n\n");
