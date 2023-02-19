@@ -13,6 +13,7 @@
     /cg_drawfps 1
     /cg_fov 150
     /cg_railTrailTime 0
+    /cg_oldrail 1
     
     Prereq:
     sudo apt install clang libx11-dev libxdo-dev libxdo3 libespeak1 libespeak-dev espeak
@@ -47,12 +48,9 @@
 #define SCAN_WIDTH 28
 #define SCAN_HEIGHT 28
 
-const uint sw = SCAN_WIDTH;
-const uint sh = SCAN_HEIGHT;
-const uint sw2 = sw/2;
-const uint sh2 = sh/2;
-const uint slc = sw*sh;
-const uint slall = slc*3;
+const uint sd = 28;
+const uint sd2 = sd/2;
+const uint slall = (sd*sd)*3;
 
 float input[slall] = {0};
 uint sps = 0; // for SPS
@@ -70,6 +68,15 @@ char targets_dir[256];
    ~~ Neural Network Forward-Pass
 */
 void processScanArea(Window w);
+
+uint64_t microtime()
+{
+    struct timeval tv;
+    struct timezone tz;
+    memset(&tz, 0, sizeof(struct timezone));
+    gettimeofday(&tv, &tz);
+    return 1000000 * tv.tv_sec + tv.tv_usec;
+}
 
 void processCNN(k2c_tensor* input_1_input, k2c_tensor* dense_output)
 { 
@@ -1362,13 +1369,35 @@ void processCNN(k2c_tensor* input_1_input, k2c_tensor* dense_output)
         &dense_bias,k2c_sigmoid,dense_fwork);
 }
 
+inline uint pR(const uint ofs) // check pixel range for aqua blue
+{
+    if(input[ofs+1] > input[ofs] && input[ofs+2] > input[ofs] && fabsf(input[ofs+1]-input[ofs+2]) < 0.13f && input[ofs+2] > 0.09f)
+        return 1;
+    return 0;
+}
+
 float processModel()
 {
+    // grab screen
     processScanArea(twin);
+
+    // return val
     float r = 0.f;
+
+    // try cnn
     k2c_tensor in = { &input[0], 1, slall, {28, 28, 3, 1, 1} };
-    k2c_tensor out = { &r, 1, 1, {1, 1, 1, 1, 1} };
+    k2c_tensor out = {&r, 1, 1, {1, 1, 1, 1, 1}};
     processCNN(&in, &out);
+
+    // if cnn succeed check target centered
+    if(r >= ACTIVATION_SENITIVITY)
+    {
+        if(pR(1176) || pR(1095) || pR(1257) || pR(1092) || pR(1098) || pR(1173) || pR(1179) || pR(1254) || pR(1260))
+            return 1.f;
+        else
+            return 0.f;
+    }
+
     return r;
 }
 
@@ -1384,15 +1413,6 @@ int key_is_pressed(KeySym ks)
     KeyCode kc2 = XKeysymToKeycode(d, ks);
     int isPressed = !!(keys_return[kc2 >> 3] & (1 << (kc2 & 7)));
     return isPressed;
-}
-
-uint64_t microtime()
-{
-    struct timeval tv;
-    struct timezone tz;
-    memset(&tz, 0, sizeof(struct timezone));
-    gettimeofday(&tv, &tz);
-    return 1000000 * tv.tv_sec + tv.tv_usec;
 }
 
 unsigned int espeak_fail = 0;
@@ -1489,16 +1509,16 @@ Window getNextChild(Display* d, Window current)
 void saveSample(Window w, const char* name)
 {
     // get image block
-    XImage *img = XGetImage(d, w, x-sw2, y-sh2, sw, sh, AllPlanes, XYPixmap);
+    XImage *img = XGetImage(d, w, x-sd2, y-sd2, sd, sd, AllPlanes, XYPixmap);
     if(img == NULL)
         return;
 
     // extract colour information
     unsigned char rgbbytes[slall] = {0};
     int i = 0;
-    for(int y = 0; y < sh; y++)
+    for(int y = 0; y < sd; y++)
     {
-        for(int x = 0; x < sw; x++)
+        for(int x = 0; x < sd; x++)
         {
             const unsigned long pixel = XGetPixel(img, x, y);
             rgbbytes[i] = (pixel & img->red_mask) >> 16;
@@ -1518,15 +1538,15 @@ void saveSample(Window w, const char* name)
 void processScanArea(Window w)
 {
     // get image block
-    XImage *img = XGetImage(d, w, x-sw2, y-sh2, sw, sh, AllPlanes, XYPixmap);
+    XImage *img = XGetImage(d, w, x-sd2, y-sd2, sd, sd, AllPlanes, XYPixmap);
     if(img == NULL)
         return;
 
     // extract colour information
     int i = 0;
-    for(int y = 0; y < sh; y++)
+    for(int y = 0; y < sd; y++)
     {
-        for(int x = 0; x < sw; x++)
+        for(int x = 0; x < sd; x++)
         {
             const unsigned long pixel = XGetPixel(img, x, y);
             const unsigned char cr = (pixel & img->red_mask) >> 16;
@@ -1551,6 +1571,26 @@ void processScanArea(Window w)
 /***************************************************
    ~~ Console Utils
 */
+
+// int gre()
+// {
+//     int r = 0;
+//     while(r == 0 || r == 15 || r == 16 || r == 189)
+//     {
+//         r = (rand()%229)+1;
+//     }
+//     return r;
+// }
+// void random_printf(const char* text)
+// {
+//     const unsigned int len = strlen(text);
+//     for(unsigned int i = 0; i < len; i++)
+//     {
+//         printf("\e[38;5;%im", gre());
+//         printf("%c", text[i]);
+//     }
+//     printf("\e[38;5;123m");
+// }
 
 void rainbow_printf(const char* text)
 {
@@ -1775,9 +1815,9 @@ int main()
                         {
                             printf("\e[93mA: %f\e[0m\n", ret);
                             XSetForeground(d, gc, 65280);
-                            XDrawRectangle(d, twin, gc, x-sw2-1, y-sh2-1, sw+2, sh+2);
+                            XDrawRectangle(d, twin, gc, x-sd2-1, y-sd2-1, sd+2, sd+2);
                             XSetForeground(d, gc, 0);
-                            XDrawRectangle(d, twin, gc, x-sw2-2, y-sh2-2, sw+4, sh+4);
+                            XDrawRectangle(d, twin, gc, x-sd2-2, y-sd2-2, sd+4, sd+4);
                             XFlush(d);
                         }
                         else
@@ -1785,9 +1825,9 @@ int main()
                             const uint s = (uint)((1.f-ret)*255.f);
                             printf("\x1b[38;2;255;%u;%um A: %f\n", s, s, ret);
                             XSetForeground(d, gc, 16711680);
-                            XDrawRectangle(d, twin, gc, x-sw2-1, y-sh2-1, sw+2, sh+2);
+                            XDrawRectangle(d, twin, gc, x-sd2-1, y-sd2-1, sd+2, sd+2);
                             XSetForeground(d, gc, 0);
-                            XDrawRectangle(d, twin, gc, x-sw2-2, y-sh2-2, sw+4, sh+4);
+                            XDrawRectangle(d, twin, gc, x-sd2-2, y-sd2-2, sd+4, sd+4);
                             XFlush(d);
                         }
                     }
@@ -1837,25 +1877,25 @@ int main()
                     {
                         // draw sample outline
                         XSetForeground(d, gc, 16711680);
-                        XDrawRectangle(d, twin, gc, x-sw2-1, y-sh2-1, sw+2, sh+2);
+                        XDrawRectangle(d, twin, gc, x-sd2-1, y-sd2-1, sd+2, sd+2);
                         XSetForeground(d, gc, 16711680);
-                        XDrawRectangle(d, twin, gc, x-sw2-2, y-sh2-2, sw+4, sh+4);
+                        XDrawRectangle(d, twin, gc, x-sd2-2, y-sd2-2, sd+4, sd+4);
                         XFlush(d);
                         draw_sa -= 1;
                     }
                     else
                     {
                         XSetForeground(d, gc, 16777215);
-                        XDrawRectangle(d, twin, gc, x-sw2-1, y-sh2-1, sw+2, sh+2);
+                        XDrawRectangle(d, twin, gc, x-sd2-1, y-sd2-1, sd+2, sd+2);
                         XSetForeground(d, gc, 16776960);
-                        XDrawRectangle(d, twin, gc, x-sw2-2, y-sh2-2, sw+4, sh+4);
+                        XDrawRectangle(d, twin, gc, x-sd2-2, y-sd2-2, sd+4, sd+4);
                         XFlush(d);
                     }
                 }
                 else
                 {
                     XSetForeground(d, gc, 65280);
-                    XDrawRectangle(d, twin, gc, x-sw2-1, y-sh2-1, sw+2, sh+2);
+                    XDrawRectangle(d, twin, gc, x-sd2-1, y-sd2-1, sd+2, sd+2);
                     XFlush(d);
                 }
             }
@@ -1868,17 +1908,17 @@ int main()
                 if(sample_capture == 1)
                 {
                     XSetForeground(d, gc, 16777215);
-                    XDrawRectangle(d, twin, gc, x-sw2-1, y-sh2-1, sw+2, sh+2);
+                    XDrawRectangle(d, twin, gc, x-sd2-1, y-sd2-1, sd+2, sd+2);
                     XSetForeground(d, gc, 16711680);
-                    XDrawRectangle(d, twin, gc, x-sw2-2, y-sh2-2, sw+4, sh+4);
+                    XDrawRectangle(d, twin, gc, x-sd2-2, y-sd2-2, sd+4, sd+4);
                     XFlush(d);
                 }
                 else
                 {
                     XSetForeground(d, gc, 16711680);
-                    XDrawRectangle(d, twin, gc, x-sw2-1, y-sh2-1, sw+2, sh+2);
+                    XDrawRectangle(d, twin, gc, x-sd2-1, y-sd2-1, sd+2, sd+2);
                     XSetForeground(d, gc, 65280);
-                    XDrawRectangle(d, twin, gc, x-sw2-2, y-sh2-2, sw+4, sh+4);
+                    XDrawRectangle(d, twin, gc, x-sd2-2, y-sd2-2, sd+4, sd+4);
                     XFlush(d);
                 }
             }
