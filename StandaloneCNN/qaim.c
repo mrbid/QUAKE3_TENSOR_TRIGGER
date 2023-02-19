@@ -1632,6 +1632,7 @@ int main()
     unsigned int crosshair = 1;
     unsigned int sample_capture = 0;
     unsigned int hotkeys = 1;
+    unsigned int draw_sa = 0;
     time_t ct = time(0);
 
     // open display 0
