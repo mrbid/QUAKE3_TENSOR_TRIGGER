@@ -45,9 +45,6 @@
 #define REPEAT_ACTIVATION 0
 
 #define uint unsigned int
-#define SCAN_WIDTH 28
-#define SCAN_HEIGHT 28
-
 const uint sd = 28;
 const uint sd2 = sd/2;
 const uint slall = (sd*sd)*3;
@@ -1635,7 +1632,6 @@ int main()
     unsigned int crosshair = 1;
     unsigned int sample_capture = 0;
     unsigned int hotkeys = 1;
-    unsigned int draw_sa = 0;
     time_t ct = time(0);
 
     // open display 0
