@@ -2,7 +2,7 @@
 --------------------------------------------------
     James William Fletcher (github.com/mrbid)
 --------------------------------------------------
-        DECEMBER 2022
+        FEBRUARY 2023
         ~~~~~~~~~~~~~
 
     Force models to aqua blue bones!
@@ -68,16 +68,6 @@ char targets_dir[256];
    ~~ Neural Network Forward-Pass
 */
 void processScanArea(Window w);
-
-uint64_t microtime()
-{
-    struct timeval tv;
-    struct timezone tz;
-    memset(&tz, 0, sizeof(struct timezone));
-    gettimeofday(&tv, &tz);
-    return 1000000 * tv.tv_sec + tv.tv_usec;
-}
-
 void processCNN(k2c_tensor* input_1_input, k2c_tensor* dense_output)
 { 
     size_t conv2d_stride[2] = {1,1}; 
@@ -1415,6 +1405,15 @@ int key_is_pressed(KeySym ks)
     return isPressed;
 }
 
+uint64_t microtime()
+{
+    struct timeval tv;
+    struct timezone tz;
+    memset(&tz, 0, sizeof(struct timezone));
+    gettimeofday(&tv, &tz);
+    return 1000000 * tv.tv_sec + tv.tv_usec;
+}
+
 unsigned int espeak_fail = 0;
 void speakS(const char* text)
 {
@@ -1571,26 +1570,6 @@ void processScanArea(Window w)
 /***************************************************
    ~~ Console Utils
 */
-
-// int gre()
-// {
-//     int r = 0;
-//     while(r == 0 || r == 15 || r == 16 || r == 189)
-//     {
-//         r = (rand()%229)+1;
-//     }
-//     return r;
-// }
-// void random_printf(const char* text)
-// {
-//     const unsigned int len = strlen(text);
-//     for(unsigned int i = 0; i < len; i++)
-//     {
-//         printf("\e[38;5;%im", gre());
-//         printf("%c", text[i]);
-//     }
-//     printf("\e[38;5;123m");
-// }
 
 void rainbow_printf(const char* text)
 {
