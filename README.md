@@ -20,7 +20,7 @@ or
 ./RUN_FNN.sh
 ```
 
-This is cool but [this one is better for low end hardware](https://gist.github.com/mrbid/37996a90792f26bd02787fd4ab8b1bad).
+[This one is better for low end hardware](https://gist.github.com/mrbid/37996a90792f26bd02787fd4ab8b1bad).
 
 <details>
     <summary>Q3 Config for low end hardware</summary>
