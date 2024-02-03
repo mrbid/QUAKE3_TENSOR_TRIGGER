@@ -7,7 +7,8 @@ This is trained from a dataset I collected of 3,798 samples of the blue bones pl
 
 ### prerequisites 
 ```
-sudo apt install clang xterm python3 python3-pip libx11-dev libxdo-dev libxdo3 libespeak1 libespeak-dev espeak
+sudo apt install clang xterm python3 python3-pip libx11-dev
+sudo apt install libxdo-dev libxdo3 libespeak1 libespeak-dev espeak
 sudo python3 -m pip install --upgrade pip
 sudo python3 -m pip install numpy
 sudo python3 -m pip install tensorflow-cpu
