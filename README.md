@@ -1,7 +1,7 @@
 # QUAKE3_TENSOR_TRIGGER
 A machine learning trigger bot for Quake III Arena &amp; Quake Live.
 
-This is trained from a dataset I collected of 3,798 samples of the blue bones player model in live-gameplay in Quake 3 Arena.
+This is trained from a dataset I collected of 7,444 samples of the blue bones player model in live-gameplay in Quake 3 Arena.
 
 ### All you have to do is force player models to the aqua blue bones model as that is the only character model I trained this dataset on.
 
